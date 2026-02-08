@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -691,16 +691,25 @@
         };
       }
 
-      function buildVerifyUrl() {
-        return "https://edistrict-assam-gov-in-edistrict.github.io/NCL/varify.html";
+      function buildVerifyUrl(data) {
+        const baseUrl =
+          "https://edistrict-assam-gov-in-edistrict.github.io/NCL/varify.html";
+        const url = new URL(baseUrl);
+        if (data) {
+          Object.keys(data).forEach((key) => {
+            const val = data[key];
+            if (val) url.searchParams.set(key, val);
+          });
+        }
+        if (window.__appId) {
+          url.searchParams.set("appId", window.__appId);
+        }
+        return url.toString();
       }
 
       function generateQR() {
-        const authURL = new URL(buildVerifyUrl());
-        if (window.__appId) {
-          authURL.searchParams.set("appId", window.__appId);
-        }
-        const verifyURL = authURL.toString();
+        const data = collectData();
+        const verifyURL = buildVerifyUrl(data);
 
         const qrContainer = document.getElementById("qr-box");
         qrContainer.innerHTML = "";
@@ -827,3 +836,4 @@
     </script>
   </body>
 </html>
+
