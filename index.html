@@ -31,7 +31,7 @@
         height: 297mm;
         max-height: 297mm;
         background: white;
-        padding: 8mm 10mm;
+        padding: 6mm 8mm;
         box-sizing: border-box;
         position: relative;
         color: #000;
@@ -79,8 +79,8 @@
       .meta-container {
         display: flex;
         justify-content: space-between;
-        margin-top: 10px;
-        font-size: 13.5px;
+        margin-top: 6px;
+        font-size: 13.2px;
       }
       /* Barcode fix for PDF */
       .barcode-box {
@@ -121,7 +121,7 @@
 
       .title-block {
         text-align: center;
-        margin: 10px 0 8px;
+        margin: 6px 0 6px;
       }
       .title-block h1 {
         font-size: 12.5px;
@@ -132,9 +132,9 @@
       }
 
       .middle-section {
-        font-size: 13.5px;
-        line-height: 1.7;
-        margin-top: 5px;
+        font-size: 13.2px;
+        line-height: 1.6;
+        margin-top: 4px;
       }
       .row {
         display: flex;
@@ -149,10 +149,10 @@
         padding: 0 3px;
       }
       .eng-para {
-        margin-top: 18px;
+        margin-top: 12px;
         text-align: justify;
-        line-height: 1.5;
-        font-size: 11px;
+        line-height: 1.45;
+        font-size: 10.5px;
       }
 
       /* Pure footer area ko manage karne ke liye */
@@ -161,9 +161,9 @@
         justify-content: space-between;
         align-items: flex-start;
         font-family: Arial, sans-serif;
-        padding: 12px 14px 6px;
+        padding: 6px 12px 2px;
         width: 100%;
-        gap: 20px;
+        gap: 14px;
       }
       .footer-block {
         position: static;
@@ -171,9 +171,9 @@
       }
 
       #qr-box {
-        width: 120px;
-        height: 120px;
-        background-color: #eee;
+        width: 160px;
+        height: 160px;
+        background-color: #ffffff;
         position: relative;
         overflow: hidden;
       }
@@ -238,18 +238,18 @@
       }
 
       .notes-area {
-        margin-top: 8px;
+        margin-top: 4px;
         /* Line removed as requested */
-        padding-top: 2px;
+        padding-top: 0;
       }
       .csc-footer {
         position: static;
         width: 100%;
         display: flex;
         justify-content: space-between;
-        font-size: 9.5px;
+        font-size: 8px;
         font-style: italic;
-        margin-top: 4px;
+        margin-top: 1px;
       }
 
       @media print {
@@ -601,7 +601,7 @@
             "
             >NOTE :</span
           >
-          <div style="font-size: 9px; line-height: 1.25; margin-top: 3px">
+          <div style="font-size: 7.4px; line-height: 1.08; margin-top: 2px">
             <b>a.</b> The term 'Ordinarily' used here will have the same meaning
             as in Section 20 of the Representation of the People Act, 1950.
             <b>b.</b> The authorities competent to issue Caste Certificates are
@@ -618,10 +618,10 @@
           </div>
           <ol
             style="
-              font-size: 8.8px;
+              font-size: 6.8px;
               font-style: italic;
-              line-height: 1.25;
-              margin: 5px 0 0 15px;
+              line-height: 1.05;
+              margin: 2px 0 0 12px;
               padding: 0;
             "
           >
@@ -639,7 +639,7 @@
             </li>
             <li>Tampering of this certificate will attract penal action.</li>
           </ol>
-          <div class="csc-footer">
+          <div class="csc-footer" style="margin-top: 1px">
             <div>
               CSC Name :
               <span
@@ -695,10 +695,32 @@
         const baseUrl =
           "https://edistrict-assam-gov-in-edistrict.github.io/NCL/varify.html";
         const url = new URL(baseUrl);
+        const keyMap = {
+          certNo: "cn",
+          appNo: "an",
+          date: "dt",
+          name: "nm",
+          father: "fn",
+          district: "ds",
+          village: "vg",
+          state: "st",
+          community: "cm",
+          assamFamily: "af",
+          cscName: "cnm",
+          cscId: "cid",
+        };
+        const compactKeys = [
+          "certNo",
+          "appNo",
+          "date",
+          "name",
+          "father",
+          "district",
+        ];
         if (data) {
-          Object.keys(data).forEach((key) => {
+          compactKeys.forEach((key) => {
             const val = data[key];
-            if (val) url.searchParams.set(key, val);
+            if (val) url.searchParams.set(keyMap[key], val);
           });
         }
         if (window.__appId) {
@@ -716,11 +738,11 @@
 
         new QRCode(qrContainer, {
           text: verifyURL,
-          width: 120,
-          height: 120,
+          width: 160,
+          height: 160,
           colorDark: "#000000",
           colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.M,
+          correctLevel: QRCode.CorrectLevel.L,
         });
       }
 
@@ -836,4 +858,3 @@
     </script>
   </body>
 </html>
-
